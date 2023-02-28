@@ -20,7 +20,7 @@ class AppModule extends StatelessWidget {
           lazy: false,
         ),
         Provider<UserRepository>(
-          create: (_) => UserRepositoryImpl(
+          create: (context) => UserRepositoryImpl(
             firebaseAuth: context.read(),
           ),
         ),
