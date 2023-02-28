@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     context.read<RegisterController>().addListener(() {
-      final controller = context.read()<RegisterController>();
+      final controller = context.read<RegisterController>();
       var success = controller.success;
       var error = controller.error;
       if (success) {
