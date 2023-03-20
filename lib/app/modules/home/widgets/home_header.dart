@@ -15,15 +15,16 @@ class HomeHeader extends StatelessWidget {
             vertical: 20,
           ),
           child: Selector<AuthProvider, String>(
-              selector: (context, authProvider) =>
-                  authProvider.user?.displayName ?? 'Não informado',
-              builder: (_, value, __) {
-                return Text(
-                  'E ai, $value',
-                  style: context.textTeme.headline5
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                );
-              }),
+            selector: (context, authProvider) =>
+                authProvider.user?.displayName ?? 'Não informado',
+            builder: (_, value, __) {
+              return Text(
+                'E ai, $value !',
+                style: context.textTeme.headline5
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              );
+            },
+          ),
         )
       ],
     );

@@ -12,6 +12,7 @@ class _TodoCardFilterState extends State<TodoCardFilter> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(20),
       constraints: const BoxConstraints(
         minHeight: 120,
         maxWidth: 150,
