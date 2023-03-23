@@ -1,10 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
+import 'package:todo_list_provider/app/core/widget/todo_list_field.dart';
 
 import 'package:todo_list_provider/app/modules/tasks/task_create_controller.dart';
+import 'package:todo_list_provider/app/modules/tasks/widgets/calendar_button.dart';
+import 'package:validatorless/validatorless.dart';
 
 class TaskCreatePage extends StatelessWidget {
   TaskCreateController _controller;
+  final descriptionEC = TextEditingController();
 
   TaskCreatePage({
     Key? key,
@@ -16,9 +21,59 @@ class TaskCreatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TaskCreate'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
-      body: Container(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: context.primaryColor,
+        label: const Text(
+          'Salvar Task',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Form(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Criar Atividade',
+                  style: context.titleStyle.copyWith(fontSize: 20),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              TodoListField(
+                label: '',
+                controller: descriptionEC,
+                validator: Validatorless.required(
+                  'Descrição é obrigatória',
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CalendarButton(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

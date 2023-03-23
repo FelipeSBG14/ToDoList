@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_list_provider/app/core/database/sqlite_adm_connection.dart';
 import 'package:todo_list_provider/app/core/navigator/todo_list_navigator.dart';
 import 'package:todo_list_provider/app/core/ui/todo_list_ui_config.dart';
 import 'package:todo_list_provider/app/modules/auth/auth_module.dart';
 import 'package:todo_list_provider/app/modules/home/home_module.dart';
 import 'package:todo_list_provider/app/modules/splash/splash_page.dart';
+import 'package:todo_list_provider/app/modules/tasks/task_module.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -22,13 +24,14 @@ class _AppWidgetState extends State<AppWidget> {
   void initState() {
     super.initState();
     FirebaseAuth auth = FirebaseAuth.instance;
-    WidgetsBinding.instance.removeObserver(sqliteAdmConnection);
+    WidgetsBinding.instance.addObserver(sqliteAdmConnection);
   }
 
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.addObserver(sqliteAdmConnection);
+
+    WidgetsBinding.instance.removeObserver(sqliteAdmConnection);
   }
 
   @override
@@ -37,9 +40,17 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'Todo List Provider',
       theme: TodoListUiConfig.theme,
       navigatorKey: TodoListNavigator.navigatorKey,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('pt', 'BR'),
+      ],
       routes: {
         ...AuthModule().routers,
         ...HomeModule().routers,
+        ...TaskModule().routers,
       },
       home: const SplashPage(),
     );
