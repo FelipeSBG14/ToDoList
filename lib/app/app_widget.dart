@@ -47,6 +47,7 @@ class _AppWidgetState extends State<AppWidget> {
       supportedLocales: [
         const Locale('pt', 'BR'),
       ],
+      //Parou no minuto 21:54 da aula
       routes: {
         ...AuthModule().routers,
         ...HomeModule().routers,

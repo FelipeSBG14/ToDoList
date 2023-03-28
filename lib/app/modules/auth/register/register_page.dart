@@ -40,7 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
       context: context,
       successCallBack: (notifier, listenerInstace) {
         listenerInstace.dispose();
-        Navigator.of(context).pop();
       },
       errorCallBack: (notifier, listenerInstance) {
         print('DEU RUIMMM !!');

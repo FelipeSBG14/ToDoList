@@ -1,5 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:todo_list_provider/app/core/notifier/default_listener_notifier.dart';
+
 import 'package:todo_list_provider/app/core/ui/theme_extensions.dart';
+import 'package:todo_list_provider/app/models/task_filter_enum.dart';
+import 'package:todo_list_provider/app/modules/home/home_controller.dart';
 import 'package:todo_list_provider/app/modules/home/widgets/home_drawer.dart';
 import 'package:todo_list_provider/app/modules/home/widgets/home_filters.dart';
 import 'package:todo_list_provider/app/modules/home/widgets/home_header.dart';
@@ -7,12 +12,38 @@ import 'package:todo_list_provider/app/modules/home/widgets/home_tasks.dart';
 import 'package:todo_list_provider/app/modules/home/widgets/home_week_filter.dart';
 import 'package:todo_list_provider/app/modules/tasks/task_module.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  HomeController _homeController;
 
-  void _goToCreateTask(BuildContext context) {
+  HomePage({
+    Key? key,
+    required HomeController homeController,
+  })  : _homeController = homeController,
+        super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    DefaultListenerNotifier(changeNotifier: widget._homeController).listener(
+      context: context,
+      successCallBack: (notifier, listenerInstance) {
+        listenerInstance.dispose();
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget._homeController.loadTotalTasks();
+      widget._homeController.findTasks(filter: TaskFilterEnum.today);
+    });
+  }
+
+  void _goToCreateTask(BuildContext context) async {
     //Navigator.of(context).pushNamed('/task/create')
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: const Duration(
           milliseconds: 400,
@@ -31,6 +62,7 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
+    widget._homeController.refreshPage();
   }
 
   @override
@@ -76,7 +108,7 @@ class HomePage extends StatelessWidget {
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       HomeHeader(),
                       HomeFilters(),
                       HomeWeekFilter(),
