@@ -34,7 +34,7 @@ class HomeWeekFilter extends StatelessWidget {
                     controller.inititalDateOfWeek ?? DateTime.now(),
                 builder: (_, value, __) {
                   return DatePicker(
-                    DateTime.now(),
+                    value,
                     locale: 'pt_BR',
                     initialSelectedDate: value,
                     selectionColor: context.primaryColor,
