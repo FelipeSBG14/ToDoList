@@ -25,7 +25,7 @@ class TasksServiceImpl implements TasksService {
   @override
   Future<List<TaskModel>> getTomorrow() {
     var tomorrowDate = DateTime.now().add(
-      Duration(
+      const Duration(
         days: 1,
       ),
     );
@@ -56,7 +56,7 @@ class TasksServiceImpl implements TasksService {
       );
     }
     endFilter = startFilter.add(
-      Duration(
+      const Duration(
         days: 7,
       ),
     );
@@ -70,4 +70,8 @@ class TasksServiceImpl implements TasksService {
       tasks: tasks,
     );
   }
+
+  @override
+  Future<void> checkOrUncheckTask(TaskModel task) =>
+      _tasksRepository.checkOrUncheckTask(task);
 }

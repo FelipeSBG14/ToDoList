@@ -40,9 +40,9 @@ class HomeWeekFilter extends StatelessWidget {
                     selectionColor: context.primaryColor,
                     selectedTextColor: Colors.white,
                     daysCount: 7,
-                    monthTextStyle: TextStyle(fontSize: 8),
-                    dayTextStyle: TextStyle(fontSize: 13),
-                    dateTextStyle: TextStyle(fontSize: 13),
+                    monthTextStyle: const TextStyle(fontSize: 8),
+                    dayTextStyle: const TextStyle(fontSize: 13),
+                    dateTextStyle: const TextStyle(fontSize: 13),
                     onDateChange: (date) {
                       context.read<HomeController>().filterByDay(date);
                     },
